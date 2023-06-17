@@ -7,6 +7,16 @@ import { kv } from '@vercel/kv'
 import { auth } from '@/auth'
 import { type Chat } from '@/lib/types'
 
+import weaviate, { WeaviateClient, ApiKey } from 'weaviate-ts-client'
+
+const client: WeaviateClient = weaviate.client({
+  scheme: 'https',
+  host: process.env.WEAVIATE_HOST!,
+  apiKey: new ApiKey(process.env.WEAVIATE_KEY!),
+  // headers: { 'X-OpenAI-Api-Key': process.env.OPENAI_API_KEY! }
+  headers: { 'X-Cohere-Api-Key': process.env.COHERE_API_KEY! }
+})
+
 export async function getChats(userId?: string | null) {
   if (!userId) {
     return []
@@ -115,4 +125,14 @@ export async function shareChat(chat: Chat) {
   await kv.hmset(`chat:${chat.id}`, payload)
 
   return payload
+}
+
+export async function callWeaviate(query: string /* , channel?: string */) {
+  return client.graphql
+    .get()
+    .withClassName('Messages_2')
+    .withFields('text')
+    .withNearText({ concepts: [query] })
+    .withLimit(10)
+    .do()
 }
