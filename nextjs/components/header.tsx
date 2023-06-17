@@ -58,7 +58,7 @@ export async function Header() {
       <div className="flex items-center justify-end space-x-2">
         <a
           target="_blank"
-          href="https://github.com/vercel/nextjs-ai-chatbot/"
+          href="https://github.com/bkms/mlops-hackathon"
           rel="noopener noreferrer"
           className={cn(buttonVariants({ variant: 'outline' }))}
         >
@@ -66,13 +66,13 @@ export async function Header() {
           <span className="ml-2 hidden md:flex">GitHub</span>
         </a>
         <a
-          href="https://github.com/vercel/nextjs-ai-chatbot/"
+          href="https://weaviate.io"
           target="_blank"
           className={cn(buttonVariants())}
         >
-          <IconVercel className="mr-2" />
-          <span className="hidden sm:block">Deploy to Vercel</span>
-          <span className="sm:hidden">Deploy</span>
+          {/* <IconVercel className="mr-2" /> */}
+          <span className="hidden sm:block">Try Weaviate</span>
+          <span className="sm:hidden">Weaviate</span>
         </a>
       </div>
     </header>

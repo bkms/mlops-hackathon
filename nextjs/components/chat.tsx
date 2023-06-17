@@ -20,6 +20,20 @@ import { useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 
+import weaviate, {
+  WeaviateClient,
+  ObjectsBatcher,
+  ApiKey
+} from 'weaviate-ts-client'
+// import fetch from 'node-fetch';
+
+// const client: WeaviateClient = weaviate.client({
+//   scheme: 'https',
+//   host: process.env.WEAVIATE_URL!,
+//   apiKey: new ApiKey(process.env.WEAVIATE_KEY!),
+//   headers: { 'X-OpenAI-Api-Key': process.env.OPENAI_API_KEY! }
+// })
+
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -35,6 +49,7 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
+      // TODO change this
       initialMessages,
       id,
       body: {
